@@ -1,35 +1,63 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../api/api";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const data = await loginUser(email, password);
+      localStorage.setItem("user", JSON.stringify(data)); // save user info
+      setMessage("Login successful! Redirecting to dashboard...");
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } catch (err) {
+      setMessage(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-500 to-indigo-600">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-96">
-        <h2 className="text-3xl font-bold text-center mb-6 text-purple-700">
-          Login
-        </h2>
-
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full mb-4 p-3 border rounded-lg"
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full mb-4 p-3 border rounded-lg"
-        />
-
-        <button className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition">
-          Login
-        </button>
-
-        <p className="text-center mt-4 text-sm">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-purple-600 font-semibold">
-            Sign Up
-          </Link>
-        </p>
+    <div className="flex justify-center items-center h-screen">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-96">
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 mb-4 rounded-lg border dark:bg-gray-700"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 mb-4 rounded-lg border dark:bg-gray-700"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-secondary text-white p-3 rounded-lg"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+        {message && (
+          <p className="mt-4 text-center text-sm text-green-500">{message}</p>
+        )}
       </div>
     </div>
   );

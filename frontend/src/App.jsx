@@ -50,6 +50,10 @@ function App() {
         <Route path="/challenges" element={<ChallengesPage />} />
         <Route path="/ai-suggestions" element={<AISuggestionsPage />} />
         <Route path="/real-time" element={<RealTimePage />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );

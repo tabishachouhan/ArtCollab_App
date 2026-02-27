@@ -1,70 +1,79 @@
 import React, { useState } from "react";
+import { Sparkles, Copy } from "lucide-react";
 
 const aiPrompts = [
-    "Draw a futuristic cityscape",
-    "Create a character inspired by music",
-    "Illustrate your dream world",
-    "Design a logo for a fictional company",
-    "Paint an abstract emotion",
-    "Capture the beauty of nature in a single painting",
-    "Reimagine a classic story in a modern style",
-    "Sketch your favorite song",
-    "Design an imaginary animal",
-    "Create art inspired by your feelings",
+  "Draw a futuristic cityscape",
+  "Create a character inspired by music",
+  "Illustrate your dream world",
+  "Design a logo for a fictional company",
+  "Paint an abstract emotion",
+  "Capture nature in a surreal style",
+  "Reimagine a classic story in cyberpunk theme",
+  "Sketch your favorite song visually",
+  "Design an imaginary animal species",
+  "Create art inspired by nostalgia",
 ];
 
 export default function AISuggestionsPage() {
-    const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState("");
 
-    const generatePrompt = () => {
-        const random = aiPrompts[Math.floor(Math.random() * aiPrompts.length)];
-        setPrompt(random);
-    };
+  const generatePrompt = () => {
+    const random =
+      aiPrompts[Math.floor(Math.random() * aiPrompts.length)];
+    setPrompt(random);
+  };
 
-    return (
-        <div className="min-h-screen relative flex flex-col items-center justify-start p-8 text-center overflow-hidden">
-            {/* Background image */}
-            <img
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80"
-                alt="Background"
-                className="absolute inset-0 w-full h-full object-cover -z-10"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-purple-800/40 to-pink-700/50 -z-10"></div>
+  const copyPrompt = () => {
+    navigator.clipboard.writeText(prompt);
+  };
 
-            {/* Title */}
-            <h1 className="text-5xl md:text-6xl font-extrabold mb-8 bg-clip-text text-transparent 
-    bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-400 animate-pulse drop-shadow-lg">
-                AI Art Suggestions & Inspiration
-            </h1>
+  return (
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-16 overflow-hidden bg-black text-white">
 
-            {/* Generate button */}
-            <button
-                onClick={generatePrompt}
-                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-purple-600 hover:to-pink-500 transition px-8 py-4 rounded-full font-bold text-white text-lg shadow-lg"
-            >
-                Generate AI Suggestion
-            </button>
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-indigo-900 animate-pulse opacity-60"></div>
 
-            {/* Current AI suggestion */}
-            {prompt && (
-                <div className="mt-10 bg-gradient-to-r from-purple-500 to-pink-500 p-6 rounded-3xl shadow-xl max-w-lg animate-fadeIn">
-                    <p className="text-2xl md:text-3xl font-extrabold text-white drop-shadow-lg">
-                        {prompt}
-                    </p>
-                </div>
-            )}
+      {/* Glass Container */}
+      <div className="relative z-10 backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-12 w-full max-w-4xl shadow-2xl">
 
-            {/* Grid of AI prompts */}
-            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12 max-w-6xl w-full">
-                {aiPrompts.map((p, i) => (
-                    <div
-                        key={i}
-                        className="bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 text-white rounded-3xl p-6 shadow-2xl hover:scale-105 transform transition cursor-pointer"
-                    >
-                        <p className="text-xl md:text-2xl font-bold drop-shadow-lg">{p}</p>
-                    </div>
-                ))}
-            </div>
+        {/* Heading */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <Sparkles className="text-pink-400" size={40} />
+          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+            AI Art Inspiration
+          </h1>
         </div>
-    );
+
+        <p className="text-gray-300 mb-10 text-lg">
+          Generate creative prompts to spark your next masterpiece.
+        </p>
+
+        {/* Generate Button */}
+        <button
+          onClick={generatePrompt}
+          className="px-8 py-4 rounded-full font-semibold text-lg 
+          bg-gradient-to-r from-pink-500 to-purple-600 
+          hover:scale-105 transition-all duration-300 shadow-lg"
+        >
+          Generate Suggestion
+        </button>
+
+        {/* Prompt Display */}
+        {prompt && (
+          <div className="mt-10 bg-white/10 border border-white/20 p-6 rounded-2xl shadow-xl flex items-center justify-between gap-4 animate-fadeIn">
+            <p className="text-xl md:text-2xl font-semibold">
+              {prompt}
+            </p>
+
+            <button
+              onClick={copyPrompt}
+              className="p-2 bg-white/20 hover:bg-white/30 rounded-lg transition"
+            >
+              <Copy size={20} />
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

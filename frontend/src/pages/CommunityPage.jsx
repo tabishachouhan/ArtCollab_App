@@ -4,58 +4,80 @@ export default function CommunityPage() {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const [aiTyping, setAiTyping] = useState(false);
+  const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
 
-  // Scroll to bottom when messages or typing changes
+  // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, aiTyping]);
 
-  // Send user message and call AI
+  // Auto resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
+    }
+  }, [text]);
+
   const sendMessage = async () => {
-    if (!text.trim()) return;
+    if (!text.trim() || loading) return;
 
     const userMessage = text.trim();
     setText("");
+    setLoading(true);
 
-    // Add user message to chat
     setMessages((prev) => [
       ...prev,
       { text: userMessage, time: new Date().toLocaleTimeString(), user: "You" },
     ]);
 
-    // Show AI typing indicator
     setAiTyping(true);
 
     try {
-      const res = await fetch("http://localhost:5678/api/ai-chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: userMessage }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/ai-chat`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: userMessage }),
+        }
+      );
 
       const data = await res.json();
 
-      // Add AI response
+      if (!res.ok) {
+        throw new Error(data?.answer || "AI error");
+      }
+
+      const aiResponse =
+        data?.answer?.trim() || "🤖 AI returned an empty response.";
+
       setMessages((prev) => [
         ...prev,
-        { text: data.answer, time: new Date().toLocaleTimeString(), user: "AI" },
+        {
+          text: aiResponse,
+          time: new Date().toLocaleTimeString(),
+          user: "AI",
+        },
       ]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
         {
-          text: "🤖 AI couldn't respond right now.",
+          text: "⚠️ AI couldn't respond. Please try again.",
           time: new Date().toLocaleTimeString(),
           user: "AI",
         },
       ]);
     } finally {
       setAiTyping(false);
+      setLoading(false);
     }
   };
 
-  // Handle Enter key (Shift+Enter for new line)
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -69,31 +91,31 @@ export default function CommunityPage() {
         Community + AI Chat
       </h1>
 
-      {/* Chat Box */}
-      <div className="w-full max-w-2xl flex flex-col border rounded-2xl shadow-lg bg-white overflow-hidden">
-        {/* Messages container */}
-        <div className="flex-1 p-4 space-y-3 overflow-y-auto h-[400px]">
+      <div className="w-full max-w-2xl flex flex-col border rounded-2xl shadow-xl bg-white overflow-hidden">
+        <div className="flex-1 p-4 space-y-3 overflow-y-auto h-[450px]">
           {messages.length === 0 && !aiTyping && (
             <p className="text-gray-400 text-center mt-10">
-              No messages yet. Start the conversation!
+              Start chatting with AI 🚀
             </p>
           )}
 
           {messages.map((m, i) => (
             <div
               key={i}
-              className={`flex ${m.user === "You" ? "justify-end" : "justify-start"}`}
+              className={`flex ${
+                m.user === "You" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
-                className={`max-w-[70%] p-3 rounded-2xl shadow ${
+                className={`max-w-[75%] p-3 rounded-2xl shadow-md ${
                   m.user === "You"
-                    ? "bg-green-500 text-white rounded-br-none"
+                    ? "bg-green-600 text-white rounded-br-none"
                     : "bg-gray-100 text-gray-800 rounded-bl-none"
                 }`}
               >
-                <div className="flex justify-between items-end gap-2">
-                  <span>{m.text}</span>
-                  <span className="text-xs text-gray-400 ml-2">{m.time}</span>
+                <div className="whitespace-pre-wrap">{m.text}</div>
+                <div className="text-xs text-gray-400 text-right mt-1">
+                  {m.time}
                 </div>
               </div>
             </div>
@@ -101,7 +123,7 @@ export default function CommunityPage() {
 
           {aiTyping && (
             <div className="flex justify-start">
-              <div className="max-w-[70%] p-3 rounded-2xl shadow bg-gray-100 text-gray-800 rounded-bl-none italic animate-pulse">
+              <div className="max-w-[70%] p-3 rounded-2xl shadow bg-gray-100 italic animate-pulse">
                 🤖 AI is typing...
               </div>
             </div>
@@ -110,21 +132,27 @@ export default function CommunityPage() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input area */}
-        <div className="flex border-t p-3 gap-2">
+        <div className="flex border-t p-3 gap-2 items-end">
           <textarea
+            ref={textareaRef}
             rows={1}
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="flex-1 p-3 rounded-2xl border shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="flex-1 p-3 rounded-2xl border shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-400 max-h-40 overflow-y-auto"
           />
+
           <button
             onClick={sendMessage}
-            className="bg-green-600 text-white px-6 rounded-2xl hover:bg-green-700 transition font-semibold"
+            disabled={loading}
+            className={`px-6 py-2 rounded-2xl font-semibold transition ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700 text-white"
+            }`}
           >
-            Send
+            {loading ? "Sending..." : "Send"}
           </button>
         </div>
       </div>

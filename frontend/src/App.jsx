@@ -9,7 +9,6 @@ import Project from "./pages/Project";
 import Explore from "./pages/Explore";
 import Events from "./pages/Events";
 import Navbar from "./components/Navbar";
-import Signup from "./pages/Signup";
 import Upload from "./pages/Upload";
 import FeaturesPage from "./pages/FeaturesPage";
 import PortfolioPage from "./pages/PortfolioPage";
@@ -28,21 +27,14 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/project/:id" element={<Project />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/upload"
-          element={<Upload setArtworks={setArtworks} />}
-        />
-        <Route
-          path="/profile"
-          element={<Profile artworks={artworks} />}
-
-        />
+        <Route path="/upload" element={<Upload setArtworks={setArtworks} />} />
+        <Route path="/profile" element={<Profile artworks={artworks} />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/collaborate" element={<CollaboratePage />} />
@@ -50,10 +42,6 @@ function App() {
         <Route path="/challenges" element={<ChallengesPage />} />
         <Route path="/ai-suggestions" element={<AISuggestionsPage />} />
         <Route path="/real-time" element={<RealTimePage />} />
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );

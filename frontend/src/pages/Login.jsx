@@ -18,7 +18,7 @@ const Login = () => {
       const data = await loginUser(email, password);
       localStorage.setItem("user", JSON.stringify(data)); // save user info
       setMessage("Login successful! Redirecting to dashboard...");
-      setTimeout(() => navigate("/dashboard"), 1000);
+      setTimeout(() => navigate("/Upload"), 1000);
     } catch (err) {
       setMessage(err.message || "Login failed");
     } finally {
@@ -38,6 +38,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="off"
           />
           <input
             type="password"
@@ -46,6 +47,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            
           />
           <button
             type="submit"
@@ -55,6 +57,15 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+        <p className="mt-4 text-center text-sm">
+          Don’t have an account?{" "}
+          <span
+            className="text-secondary cursor-pointer"
+            onClick={() => navigate("/register")}
+          >
+            Create Account
+          </span>
+        </p>
         {message && (
           <p className="mt-4 text-center text-sm text-green-500">{message}</p>
         )}

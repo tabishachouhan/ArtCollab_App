@@ -1,6 +1,6 @@
 
 // Base URL points to the deployed backend
-// frontend/src/api/api.js
+
 export const BASE_URL = "https://artcollab-app-backend-4.onrender.com/api";
 // ------------------- REGISTER -------------------
 export const registerUser = async (name, email, password) => {

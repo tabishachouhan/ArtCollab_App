@@ -30,7 +30,7 @@ export const loginUser = async (email, password) => {
 
 // ------------------- AI CHAT -------------------
 export const aiChat = async (prompt) => {
-  const res = await fetch(`${BASE_URL}/ai-chat`, {  // ✅ NO extra /api here
+  const res = await fetch(`https://artcollab-app-backend-4.onrender.com/api/ai-chat`, {  // ✅ NO extra /api here
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt }),

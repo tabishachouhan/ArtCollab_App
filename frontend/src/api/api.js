@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:5678/api"; // your backend URL
+export const BASE_URL = "http://localhost:5678/api"; 
 
 export const registerUser = async (name, email, password) => {
   try {

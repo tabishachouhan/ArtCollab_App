@@ -1,6 +1,6 @@
 
 // Base URL points to the deployed backend
-export const BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
+export const BASE_URL = import.meta.env.VITE_API_URL +"/api";
 
 // ------------------- REGISTER -------------------
 export const registerUser = async (name, email, password) => {
@@ -47,23 +47,3 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// ------------------- OPTIONAL: FETCH USER DATA -------------------
-export const fetchUserProfile = async (token) => {
-  try {
-    const res = await fetch(`${BASE_URL}/auth/profile`, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.message || "Failed to fetch profile");
-    return data;
-
-  } catch (err) {
-    console.error("Profile fetch error:", err);
-    throw err;
-  }
-};

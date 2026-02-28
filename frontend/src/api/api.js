@@ -1,7 +1,7 @@
 
-// Base URL points to the deployed backend
+// Base URL from Vite environment variable
+export const BASE_URL = import.meta.env.VITE_API_URL;
 
-export const BASE_URL = "https://artcollab-app-backend-4.onrender.com/api";
 // ------------------- REGISTER -------------------
 export const registerUser = async (name, email, password) => {
   try {
@@ -47,16 +47,37 @@ export const loginUser = async (email, password) => {
   }
 };
 
-
-// api.js
+// ------------------- AI CHAT -------------------
 export const aiChat = async (prompt) => {
-  const res = await fetch(`${BASE_URL}/ai-chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt }),
-  });
+  try {
+    const res = await fetch(`${BASE_URL}/ai-chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt }),
+    });
 
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || "AI chat failed");
-  return data;
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "AI chat failed");
+    }
+
+    return data;
+  } catch (err) {
+    console.error("AI chat error:", err);
+    throw err;
+  }
+};
+
+// ------------------- PROJECTS (example) -------------------
+export const getProjects = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/projects`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Failed to fetch projects");
+    return data;
+  } catch (err) {
+    console.error("Get projects error:", err);
+    throw err;
+  }
 };

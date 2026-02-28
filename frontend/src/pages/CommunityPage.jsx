@@ -38,7 +38,7 @@ export default function CommunityPage() {
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/ai-chat`,
+        `https://artcollab-app-backend-4.onrender.com/api/ai-chat`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

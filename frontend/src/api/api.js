@@ -1,4 +1,3 @@
-// frontend/src/api/api.js
 
 // Base URL points to the deployed backend
 export const BASE_URL = `${import.meta.env.VITE_API_URL}/api`;

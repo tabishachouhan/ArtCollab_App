@@ -4,7 +4,7 @@ export const BASE_URL = import.meta.env.VITE_API_URL;
 
 // ------------------- REGISTER -------------------
 export const registerUser = async (name, email, password) => {
-  const res = await fetch(`${BASE_URL}/auth/register`, {  // ✅ NO extra /api here
+  const res = await fetch(`${BASE_URL}/auth/register`, {  
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password }),
@@ -30,7 +30,7 @@ export const loginUser = async (email, password) => {
 
 // ------------------- AI CHAT -------------------
 export const aiChat = async (prompt) => {
-  const res = await fetch(`${BASE_URL}/ai-chat`, {  // ✅ NO extra /api here
+  const res = await fetch(`${BASE_URL}/api/ai-chat`, {  // ✅ NO extra /api here
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt }),

@@ -47,3 +47,16 @@ export const loginUser = async (email, password) => {
   }
 };
 
+
+// api.js
+export const aiChat = async (prompt) => {
+  const res = await fetch(`${BASE_URL}/ai-chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "AI chat failed");
+  return data;
+};

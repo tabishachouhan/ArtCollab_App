@@ -4,19 +4,15 @@ export const BASE_URL = import.meta.env.VITE_API_URL;
 
 // ------------------- REGISTER -------------------
 export const registerUser = async (name, email, password) => {
-  try {
-    const res = await fetch(`${BASE_URL}/auth/register`, {  // <- BASE_URL already has /api
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Registration failed");
-    return data;
-  } catch (err) {
-    console.error("Registration error:", err);
-    throw err;
-  }
+  const res = await fetch(`${BASE_URL}/auth/register`, {  
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Registration failed");
+  return data;
 };
 
 // ------------------- LOGIN -------------------

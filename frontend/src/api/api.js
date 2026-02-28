@@ -1,7 +1,7 @@
 
 // Base URL points to the deployed backend
-export const BASE_URL = import.meta.env.VITE_API_URL +"/api";
-
+// frontend/src/api/api.js
+export const BASE_URL = "https://artcollab-app-backend-4.onrender.com/api";
 // ------------------- REGISTER -------------------
 export const registerUser = async (name, email, password) => {
   try {

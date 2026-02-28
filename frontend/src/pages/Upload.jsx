@@ -134,7 +134,7 @@ const Upload = ({ setArtworks }) => {
           hover:bg-purple-700 hover:scale-[1.02]
           transition duration-300"
         >
-          🚀 Publish Artwork
+          🚀 Publish Artwork...
         </button>
 
       </div>

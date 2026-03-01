@@ -10,7 +10,7 @@ Tabisha Art Collab is a collaborative art platform where artists can showcase th
 This repository contains the frontend application built using React, which connects to the backend API for authentication, project management, and user interactions.
 
 Live Website:
-🔗 https://art-collab-app-95jq.vercel.app/
+🔗https://art-collab-app-mu.vercel.app/
 
 ✨ Features
 
@@ -73,10 +73,9 @@ The app will run on:
 
 http://localhost:3000
 🚀 Deployment Link
-https://art-collab-app-95jq.vercel.app/
+https://art-collab-app-mu.vercel.app/
 🔗 Live Site:
-https://art-collab-app-95jq.vercel.app/
-
+https://art-collab-app-mu.vercel.app/
 🔗 Backend API Link
 
 https://artcollab-app-backend-4.onrender.com
@@ -84,7 +83,7 @@ https://artcollab-app-backend-4.onrender.com
 
 ###
 Demo video
-https://drive.google.com/file/d/1-31soaYiq8_DceFhbq0pzMJf5BnLMaWX/view?usp=sharing
+https://drive.google.com/file/d/1NrD1tBukTyOqxJmdUsuBw1CsycltTlx7/view?usp=sharing
 ## 📸 Application Screenshots
 
 ### 🏠 Home

@@ -1,11 +1,10 @@
-Tabisha Art Collab – Frontend
 📌 Project Title
 
-Tabisha Art Collab – Collaborative Art Platform (Frontend)
+ Art Collab – Collaborative Art Platform (Frontend)
 
 📖 Project Description
 
-Tabisha Art Collab is a collaborative art platform where artists can showcase their projects, explore other creators, collaborate with them, and participate in events.
+Art Collab is a collaborative art platform where artists can showcase their projects, explore other creators, collaborate with them, and participate in events.
 
 This repository contains the frontend application built using React, which connects to the backend API for authentication, project management, and user interactions.
 
@@ -124,4 +123,4 @@ https://drive.google.com/file/d/1NrD1tBukTyOqxJmdUsuBw1CsycltTlx7/view?usp=shari
 
 ### 🚧 Challenges
 !Challenges
-🎥 Video Walkthrough Link
+
